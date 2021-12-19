@@ -1,0 +1,93 @@
+---
+title: "Ice 1"
+author: "Yangzhi Xu"
+date: "9/23/2021"
+output: html_document
+---
+```{r}
+library(beepr)
+```
+
+```{r}
+beep(5)
+```
+
+```{r}
+x<- 1:10
+typeof(x)
+length(x)
+characterdata <- c("East", "West", "East", "North", "North", "East", "West", "West", "West", "East", "North")
+
+characterdata
+factor_data <- factor(characterdata)
+typeof(factor_data)
+factor_data
+```
+ #Data structures 
+ 
+```{r}
+v <- c(TRUE, TRUE, FALSE, FALSE)
+v
+#v <- c("1", 1, TRUE)
+typeof(v)
+v
+l <- list("1", 1, TRUE)
+typeof(l)
+```
+
+#Matrix and data frame
+```{R}
+m <- matrix(nrow= 3, ncol =3)
+FOURS <- matrix(c(4,4,4,4),nrow = 2, ncol = 2)
+FOURS
+orderedM <- matrix( c(1, 2, 3, 4),   nrow = 2,   ncol = 2)
+dim(FOURS)
+class(FOURS)
+typeof(FOURS)
+```
+
+#Data frame
+```{r}
+id <- letters[1:10]
+score <- 1:10
+enrolled <- logical(10)
+df <- data.frame(id, score, enrolled)
+df
+```
+
+#Funcation 
+```{r}
+data("mtcars")
+head(mtcars)
+data("iris")
+iris 
+```
+
+#Tidy data
+```{r}
+library(tidyverse)
+ICEdata <- read_csv("ICE1_Data.csv")
+ICEdata
+getwd()
+summary(ICEdata)
+ICEdata_factor <- ICEdata %>%
+  mutate_if(sapply(ICEdata, is.character), as.factor)
+summary(ICEdata_factor)
+```
+
+#Selecting limited Number of variables
+```{r}
+studentProgressGraduation <-
+  ICEdata_factor %>%  
+  select(`Progress_Rpt_10-11`, `graduation 2010-11`)
+studentProgressGraduation
+graduation201011 <- ICEdata$`graduation 2010-11`
+head(graduation201011)
+length(graduation201011)
+```
+
+#Plot something 
+```{r}
+plot(studentProgressGraduation)
+hist(graduation201011)
+```

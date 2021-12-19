@@ -1,0 +1,45 @@
+---
+title: "Ice6"
+author: "Yangzhi Xu"
+date: "12/19/2021"
+output: html_document
+---
+
+#Principal Component Analysis
+```{r}
+library(tidyverse)
+set.seed(123)
+# A list of 200 values of x with means of 1 and sd of 1.5
+X <- rnorm(200, mean = 1, sd = 1.5)
+# A list of 200 residuals with sd of 0.5
+res <- rnorm(200, mean = 0, sd = 0.5)
+y <- 1 + 2 * X + res
+
+twoDData <- tibble(X = X, y = y)
+plot(twoDData)
+pca <- prcomp(twoDData, scale. = TRUE)
+summary(pca)
+pca$rotation
+```
+
+#PCA for Dimension Reducation
+```{r}
+pc1 <- pca$x[,1]
+rotation1 <- pca$rotation[,1]
+plot(scale(twoDData), col = "blue") 
+points(pc1 %*% t(rotation1), col = "orange")
+```
+
+#Pca example in an intelligent tutoring system
+```{r}
+ICEdata <- read_csv("ICE6_Data.csv")
+ICEdata
+ICEdata_noid <- ICEdata %>% select(-id)
+icepca <- prcomp(ICEdata_noid, scale. = FALSE) 
+summary(icepca)
+icepca2c <- icepca$x[,1:2]
+plot(icepca2c)
+cl <- kmeans(icepca2c, centers = 3)
+plot(icepca2c, col = cl$cluster)
+biplot(icepca, cex=.7)
+```
